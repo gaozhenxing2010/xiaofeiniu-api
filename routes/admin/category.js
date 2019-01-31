@@ -16,8 +16,7 @@ module.exports = router;
 router.get('/', (req, res) => {
   pool.query('SELECT * FROM xfn_category ORDER BY cid', (err, result) => {
     if (err) throw err;
-    var jsonData = JSON.stringify(result);
-    res.send('doData(' + jsonData + ')');
+    res.send(result);
   })
 })
 
@@ -38,7 +37,7 @@ router.delete('/:cid', (req, res) => {
       if (err) throw err;
       //获取DELETE语句在数据库中影响的行数
       if (result.affectedRows > 0) {
-        res.send({ code: 200, msg: '1 category deleted' })
+        res.send({ code: 200, msg: '1 category deleted' ,cid:res.insertId})
       } else {
         res.send({ code: 400, msg: '0 category deleted' })
       }
